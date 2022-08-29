@@ -25,6 +25,8 @@
     margin: 2%;
     border-radius: 10px;
     margin-bottom: 1%;
+    text-align: left;
+    padding-left: 5px;
 }
 
 .grid {
@@ -51,28 +53,28 @@ button:active {
     background-color: #D9d6d0;
 }
 
-#remove {
+.remove {
     background-color: #A6A272;
 }
 
-#remove:hover {
+.remove:hover {
     background-color: #7e7b57;
 }
 
-#remove:active {
+.remove:active {
     background-color: #A6A272;
 }
 
-#equals {
+.equals {
     width: 188px;
     margin-bottom: 2%;
     background-color: #9DA65D;
 }
 
-#equals:hover {
+.equals:hover {
     background-color: #727943;
 }
 
-#equals:active {
+.equals:active {
     background-color: #9DA65D;
 }

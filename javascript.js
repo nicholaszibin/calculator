@@ -1,3 +1,11 @@
+const screen = document.querySelector('.screen');
+let screenString = '';
+screen.textContent = screenString
+
+let num = [];
+let operator = [];
+let result = 0;
+
 const add = function(num1, num2) {
 	return num1 + num2;
 };
@@ -14,6 +22,10 @@ const divide = function(num1, num2) {
     return num1 / num2;
 };
 
+const mod = function(num1, num2) {
+    return num1 % num2;
+};
+
 const operate = function(operator, num1, num2) {
     if (operator === '+') {
         return add(num1, num2);
@@ -27,22 +39,60 @@ const operate = function(operator, num1, num2) {
     else if (operator === '/') {
         return divide(num1, num2);
     }
+    else if (operator === '%') {
+        return mod(num1, num2);
+    }
     else {
         return 'Error';
     }
 };
 
-const screen = document.querySelector('.screen');
-let screenSting = '';
-screen.textContent = screenSting
+const answer = function (num) {
+    const answer = document.createElement('div');
+    answer.classList.add('answer');
+    answer.textContent = `${num}`;
+    answer.style.textAlign = 'right';
+    answer.style.paddingRight = '8px';
+    answer.style.fontWeight = 'bold';
+    screen.appendChild(answer);
+}
+
+const error = function() {
+
+}
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
-    //console.log(button.textContent);
-    screenSting += button.textContent + ' ';
-    //console.log(screenSting);
-    screen.textContent = screenSting
+    
+    if (button.className === 'equals') {
+        result = num[0];
+        for (let i = 1; i < num.length; i++) {
+            result = operate(operator[i-1], result, num[i]);
+        }
+        answer(result);
+
+    } else if (button.className != 'remove') {
+        screenString += button.textContent + ' ';
+        screen.textContent = screenString
+
+        if (button.className === 'operator') {
+            operator.push(button.textContent);
+        } else {
+            num.push(Number(button.textContent));
+        }
+
+    }  else if (button.id === 'DEL') {
+        screenString = screenString.slice(0,-2);
+        screen.textContent = screenString;
+
+    } else {
+        screenString = '';
+        screen.textContent = screenString;
+        num = [];
+        operator = [];
+        result = 0;
+    }
   });
 });
 
