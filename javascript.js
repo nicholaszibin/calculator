@@ -51,7 +51,6 @@ const operate = function(operator, num1, num2) {
 const answer = function (num) {
     const answer = document.createElement('div');
     answer.classList.add('answer');
-    answer.textContent = `${num}`;
     answer.style.textAlign = 'right';
     answer.style.paddingRight = '8px';
     answer.style.fontWeight = 'bold';
@@ -61,8 +60,10 @@ const answer = function (num) {
         answer.textContent = 'Error';
         screen.appendChild(answer)
     } else {
+        answer.textContent = `${num}`;
         screen.appendChild(answer);
     }
+    result = 0;
 }
 
 const buttons = document.querySelectorAll('button');
@@ -96,11 +97,11 @@ buttons.forEach((button) => {
         document.getElementById('decimal').disabled = false;
 
     } else if (button.id === 'DEL') {
-        if (screenString.slice(-2,-1) == ' ') {
+        if (screenString.slice(-1) == ' ') {
             screenString = screenString.slice(0,-2);
             screen.textContent = screenString;
 
-        } else if (screenString.slice(-2,-1) == '.') {
+        } else if (screenString.slice(-1) == '.') {
             document.getElementById('decimal').disabled = false;
             screenString = screenString.slice(0,-1);
             screen.textContent = screenString;
