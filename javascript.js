@@ -1,3 +1,4 @@
+//Declare Variables
 const screen = document.querySelector('.screen');
 let screenString = '';
 let screenNumber = '';
@@ -7,6 +8,7 @@ let num = [];
 let operator = [];
 let result = 0;
 
+//Functions
 const add = function(num1, num2) {
 	return num1 + num2;
 };
@@ -55,6 +57,7 @@ const answer = function (num) {
     answer.style.paddingRight = '8px';
     answer.style.fontWeight = 'bold';
     answer.style.fontSize = '36px';
+    answer.style.paddingBottom = '8px';
     
     if (isNaN(Number(screenString.slice(-1)))) {
         answer.textContent = 'Error';
@@ -66,6 +69,7 @@ const answer = function (num) {
     result = 0;
 }
 
+//Button Functionality
 const buttons = document.querySelectorAll('button');
 buttons.forEach((button) => {
   button.addEventListener('click', () => {
@@ -97,6 +101,7 @@ buttons.forEach((button) => {
         document.getElementById('decimal').disabled = false;
 
     } else if (button.id === 'DEL') {
+
         if (screenString.slice(-1) == ' ') {
             screenString = screenString.slice(0,-2);
             screen.textContent = screenString;
