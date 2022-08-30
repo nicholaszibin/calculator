@@ -7,7 +7,6 @@ let num = [];
 let operator = [];
 let result = 0;
 
-
 const add = function(num1, num2) {
 	return num1 + num2;
 };
@@ -56,11 +55,14 @@ const answer = function (num) {
     answer.style.textAlign = 'right';
     answer.style.paddingRight = '8px';
     answer.style.fontWeight = 'bold';
-    screen.appendChild(answer);
-}
-
-const error = function() {
-
+    answer.style.fontSize = '36px';
+    
+    if (isNaN(Number(screenString.slice(-1)))) {
+        answer.textContent = 'Error';
+        screen.appendChild(answer)
+    } else {
+        screen.appendChild(answer);
+    }
 }
 
 const buttons = document.querySelectorAll('button');
@@ -68,28 +70,47 @@ buttons.forEach((button) => {
   button.addEventListener('click', () => {
     
     if (button.className === 'equals') {
+
         num.push(Number(screenNumber));
+        screenNumber = '';
+
         result = num[0];
         for (let i = 1; i < num.length; i++) {
             result = operate(operator[i-1], result, num[i]);
         }
         answer(result);
-
+        
     } else if (button.className == 'number') {
         screenNumber += button.textContent;
-        screen.textContent = screenNumber;
+        screenString += button.textContent;
+        screen.textContent = screenString
 
     } else if (button.className === 'operator') {
         num.push(Number(screenNumber));
+        screenNumber = '';
         operator.push(button.textContent);
 
         screenString += ' ' + button.textContent + ' ';
-        screenNumber = '';
         screen.textContent = screenString
 
+        document.getElementById('decimal').disabled = false;
+
     } else if (button.id === 'DEL') {
-        screenString = screenString.slice(0,-2);
-        screen.textContent = screenString;
+        if (screenString.slice(-2,-1) == ' ') {
+            screenString = screenString.slice(0,-2);
+            screen.textContent = screenString;
+
+        } else if (screenString.slice(-2,-1) == '.') {
+            document.getElementById('decimal').disabled = false;
+            screenString = screenString.slice(0,-1);
+            screen.textContent = screenString;
+            screenNumber = screenNumber.slice(0,-1);
+
+        } else {
+            screenString = screenString.slice(0,-1);
+            screen.textContent = screenString;
+            screenNumber = screenNumber.slice(0,-1);
+        }
 
     } else if (button.id === 'AC') {
         screenString = '';
@@ -97,6 +118,13 @@ buttons.forEach((button) => {
         num = [];
         operator = [];
         result = 0;
+        document.getElementById('decimal').disabled = false;
+        
+    } else if (button.id === 'decimal') {
+        screenNumber += button.textContent;
+        screenString += button.textContent;
+        screen.textContent = screenString
+        document.getElementById('decimal').disabled = true;
     }
   });
 });
